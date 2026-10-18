@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Create account | Fix My Campus{% endblock %}
+{% block content %}
+<div class="auth-layout">
+  <div class="auth-aside"><div class="eyebrow">JOIN THE CAMPUS COMMUNITY</div><h1>Report it.<br>Track it.<br><span>Improve it.</span></h1><p>Create an account to report problems across CSE, EEE, ECE, Civil, Mechanical, PT and general campus areas.</p><div class="aside-note">Use a real college email if your institution requires one.</div></div>
+  <div class="form-card"><h2>Create account</h2><p class="muted">Students and teachers can register here.</p>
+    <form method="post" novalidate>{{ form.hidden_tag() }}
+      <label>{{ form.full_name.label }}{{ form.full_name(class_="input", placeholder="Your full name") }}</label>{% for e in form.full_name.errors %}<small class="field-error">{{ e }}</small>{% endfor %}
+      <label>{{ form.email.label }}{{ form.email(class_="input", placeholder="you@college.edu") }}</label>{% for e in form.email.errors %}<small class="field-error">{{ e }}</small>{% endfor %}
+      <div class="form-row"><label>{{ form.role.label }}{{ form.role(class_="input") }}</label><label>{{ form.department.label }}{{ form.department(class_="input") }}</label></div>
+      <label>{{ form.password.label }}{{ form.password(class_="input", placeholder="At least 8 characters") }}</label>{% for e in form.password.errors %}<small class="field-error">{{ e }}</small>{% endfor %}
+      <label>{{ form.confirm_password.label }}{{ form.confirm_password(class_="input", placeholder="Repeat password") }}</label>{% for e in form.confirm_password.errors %}<small class="field-error">{{ e }}</small>{% endfor %}
+      {{ form.submit(class_="btn primary full") }}
+    </form><p class="form-foot">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </div>
+</div>
+{% endblock %}

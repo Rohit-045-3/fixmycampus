@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Complaint CC-{{ '%05d'|format(complaint.id) }} | Fix My Campus{% endblock %}
+{% block content %}
+<a class="back-link" href="{{ url_for('complaints') }}">← Back to problems</a>
+<div class="detail-heading"><div><div class="eyebrow">COMPLAINT CC-{{ '%05d'|format(complaint.id) }}</div><h1>{{ complaint.title }}</h1><p class="muted">Reported {{ complaint.created_at.strftime('%d %B %Y at %I:%M %p') }}</p></div><span class="status large {{ complaint.status|lower|replace(' ', '') }}">{{ complaint.status }}</span></div>
+<div class="detail-grid"><section class="detail-card"><h2>Problem details</h2><div class="detail-meta"><div><small>Department</small><strong>{{ complaint.department }}</strong></div><div><small>Category</small><strong>{{ complaint.category }}</strong></div><div><small>Location</small><strong>{{ complaint.location }}</strong></div><div><small>Priority</small><span class="priority {{ complaint.priority|lower }}">{{ complaint.priority }}</span></div><div><small>Reported by</small><strong>{{ complaint.reporter.full_name if not complaint.is_confidential or current_user.role == 'admin' or complaint.reporter_id == current_user.id else 'Confidential reporter' }}</strong></div></div><div class="description-block"><h3>Description</h3><p>{{ complaint.description }}</p></div>
+<div class="timeline"><h3>Current status</h3><div class="timeline-item"><span class="timeline-dot"></span><div><strong>{{ complaint.status }}</strong><small>Last updated {{ complaint.updated_at.strftime('%d %b %Y, %I:%M %p') }}</small></div></div></div>
+{% if complaint.resolution_note %}<div class="resolution-note"><h3>Department update</h3><p>{{ complaint.resolution_note }}</p></div>{% endif %}
+</section>
+{% if can_manage %}<aside class="form-card update-card"><h2>Manage report</h2><p class="muted">Update the status and share progress with the reporter.</p><form method="post" action="{{ url_for('update_complaint', complaint_id=complaint.id) }}">{{ form.hidden_tag() }}<label>{{ form.status.label }}{{ form.status(class_="input") }}</label><label>{{ form.resolution_note.label }}{{ form.resolution_note(class_="input textarea", rows="5", placeholder="Work started, parts required, resolution details...") }}</label>{{ form.submit(class_="btn primary full") }}</form></aside>{% endif %}
+</div>
+{% endblock %}

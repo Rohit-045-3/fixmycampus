@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Fix My Campus | College problem solving{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">SMART CAMPUS · SHARED SOLUTIONS</div>
+    <h1>Every department.<br><span>Every problem.</span><br>One platform.</h1>
+    <p>Report college problems, connect them to the right department, and follow every update until a solution is reached.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="{{ url_for('register') }}">Get started <span>→</span></a>
+      <a class="btn secondary" href="{{ url_for('login') }}">Sign in</a>
+    </div>
+    <div class="trust-row"><span class="dot"></span> For students, teachers and college administrators</div>
+  </div>
+  <div class="hero-panel">
+    <div class="panel-top"><span>Problem overview</span><span class="live-pill">● LIVE WORKFLOW</span></div>
+    <div class="mock-stat-row">
+      <div class="mock-stat"><span>Departments</span><strong>07</strong><small>Configurable</small></div>
+      <div class="mock-stat"><span>Tracking</span><strong>24/7</strong><small>Status updates</small></div>
+    </div>
+    <div class="mock-ticket">
+      <div class="ticket-icon blue">⌁</div><div class="ticket-copy"><strong>Lab Wi-Fi not working</strong><small>CSE · Computer Lab 2</small></div><span class="status inprogress">In progress</span>
+    </div>
+    <div class="mock-ticket">
+      <div class="ticket-icon orange">⚡</div><div class="ticket-copy"><strong>Electrical equipment issue</strong><small>EEE · Machines Lab</small></div><span class="status submitted">Submitted</span>
+    </div>
+    <div class="mock-ticket">
+      <div class="ticket-icon green">✓</div><div class="ticket-copy"><strong>Classroom projector repaired</strong><small>ECE Block · Room 204</small></div><span class="status resolved">Resolved</span>
+    </div>
+    <div class="workflow"><span>Reported</span><i></i><span>Assigned</span><i></i><span>Resolved</span></div>
+  </div>
+</section>
+<section class="section">
+  <div class="section-heading"><div class="eyebrow">ONE CAMPUS, MANY NEEDS</div><h2>Built for every branch</h2><p>Choose the department responsible when you report a problem.</p></div>
+  <div class="department-grid">
+    {% for d in departments %}
+      <div class="department-card"><span class="dept-symbol">{{ d[:1] }}</span><strong>{{ d }}</strong><small>{{ 'General campus issue' if d == 'General' else 'Department-specific reports' }}</small></div>
+    {% endfor %}
+  </div>
+</section>
+<section class="bottom-cta"><div><h2>Something needs fixing?</h2><p>Make it visible to the right people and keep track of the progress.</p></div><a class="btn primary" href="{{ url_for('register') }}">Join Fix My Campus →</a></section>
+{% endblock %}

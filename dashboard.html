@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Fix My Campus{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">{{ current_user.role|upper }} DASHBOARD</div><h1>Hello, {{ current_user.full_name.split(' ')[0] }} 👋</h1><p class="muted">Here is the latest view of your campus problems.</p></div><a class="btn primary" href="{{ url_for('new_complaint') }}">+ Report a problem</a></div>
+<div class="stat-grid">
+  <div class="stat-card"><span>Total visible problems</span><strong>{{ stats.total }}</strong><small>In your view</small></div>
+  <div class="stat-card"><span>Open problems</span><strong>{{ stats.open }}</strong><small>Need follow-up</small></div>
+  <div class="stat-card"><span>Resolved</span><strong>{{ stats.resolved }}</strong><small>Marked complete</small></div>
+  <div class="stat-card"><span>High priority</span><strong>{{ stats.high }}</strong><small>High or emergency</small></div>
+</div>
+<div class="content-heading"><div><h2>Recent problems</h2><p class="muted">Check status or open a report for more details.</p></div><a class="text-link" href="{{ url_for('complaints') }}">View all →</a></div>
+{% if complaints %}
+<div class="table-wrap"><table><thead><tr><th>Problem</th><th>Department</th><th>Priority</th><th>Status</th><th>Reported</th></tr></thead><tbody>
+{% for c in complaints %}<tr><td><a class="problem-title" href="{{ url_for('complaint_detail', complaint_id=c.id) }}">CC-{{ '%05d'|format(c.id) }} · {{ c.title }}</a><small class="table-sub">{{ c.category }} · {{ c.location }}</small></td><td><span class="dept-tag">{{ c.department }}</span></td><td><span class="priority {{ c.priority|lower }}">{{ c.priority }}</span></td><td><span class="status {{ c.status|lower|replace(' ', '') }}">{{ c.status }}</span></td><td>{{ c.created_at.strftime('%d %b %Y') }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}
+<div class="empty-state"><div class="empty-icon">＋</div><h3>No problems yet</h3><p>Report the first issue to get your campus problem-solving started.</p><a class="btn primary" href="{{ url_for('new_complaint') }}">Report a problem</a></div>
+{% endif %}
+{% endblock %}

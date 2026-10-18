@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Problems | Fix My Campus{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">PROBLEM TRACKER</div><h1>Reported problems</h1><p class="muted">Find a report and follow its latest status.</p></div><a class="btn primary" href="{{ url_for('new_complaint') }}">+ Report problem</a></div>
+<form class="filter-bar" method="get"><label>Department<select class="input" name="department"><option value="">All visible departments</option>{% for d in departments %}<option value="{{ d }}" {% if request.args.get('department') == d %}selected{% endif %}>{{ d }}</option>{% endfor %}</select></label><label>Status<select class="input" name="status"><option value="">All statuses</option>{% for s in statuses %}<option value="{{ s }}" {% if request.args.get('status') == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label><button class="btn secondary" type="submit">Apply filters</button></form>
+{% if complaints %}
+<div class="table-wrap"><table><thead><tr><th>Problem</th><th>Department</th><th>Priority</th><th>Status</th><th>Last updated</th></tr></thead><tbody>
+{% for c in complaints %}<tr><td><a class="problem-title" href="{{ url_for('complaint_detail', complaint_id=c.id) }}">CC-{{ '%05d'|format(c.id) }} · {{ c.title }}</a><small class="table-sub">{{ c.category }} · {{ c.location }}{% if c.is_confidential %} · Confidential{% endif %}</small></td><td><span class="dept-tag">{{ c.department }}</span></td><td><span class="priority {{ c.priority|lower }}">{{ c.priority }}</span></td><td><span class="status {{ c.status|lower|replace(' ', '') }}">{{ c.status }}</span></td><td>{{ c.updated_at.strftime('%d %b %Y, %I:%M %p') }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty-state"><h3>No matching problems</h3><p>Try changing the filters or submit a new report.</p></div>{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Login | Fix My Campus{% endblock %}
+{% block content %}
+<div class="auth-layout">
+  <div class="auth-aside"><div class="eyebrow">WELCOME BACK</div><h1>Your campus.<br>Your voice.</h1><p>Sign in to report a problem or check progress on an existing report.</p><div class="aside-note">One clear report can help your department take action.</div></div>
+  <div class="form-card"><h2>Sign in</h2><p class="muted">Use your registered college account.</p>
+    <form method="post" novalidate>{{ form.hidden_tag() }}
+      <label>{{ form.email.label }}{{ form.email(class_="input", placeholder="you@college.edu") }}</label>{% for e in form.email.errors %}<small class="field-error">{{ e }}</small>{% endfor %}
+      <label>{{ form.password.label }}{{ form.password(class_="input", placeholder="Enter password") }}</label>{% for e in form.password.errors %}<small class="field-error">{{ e }}</small>{% endfor %}
+      {{ form.submit(class_="btn primary full") }}
+    </form><p class="form-foot">New to Fix My Campus? <a href="{{ url_for('register') }}">Create an account</a></p>
+  </div>
+</div>
+{% endblock %}

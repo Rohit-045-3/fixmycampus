@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Report a problem | Fix My Campus{% endblock %}
+{% block content %}
+<div class="form-page-heading"><div class="eyebrow">MAKE YOUR CAMPUS BETTER</div><h1>Report a problem</h1><p class="muted">Give enough detail so the right department can understand and act on the issue.</p></div>
+<div class="report-layout"><form class="form-card report-form" method="post" novalidate>{{ form.hidden_tag() }}
+  <label>{{ form.title.label }}{{ form.title(class_="input", placeholder="Example: Wi-Fi not working in CSE lab") }}{% for e in form.title.errors %}<small class="field-error">{{ e }}</small>{% endfor %}</label>
+  <div class="form-row"><label>{{ form.department.label }}{{ form.department(class_="input") }}</label><label>{{ form.category.label }}{{ form.category(class_="input") }}</label></div>
+  <div class="form-row"><label>{{ form.location.label }}{{ form.location(class_="input", placeholder="Block, floor, room or lab") }}</label><label>{{ form.priority.label }}{{ form.priority(class_="input") }}</label></div>
+  <label>{{ form.description.label }}{{ form.description(class_="input textarea", rows="6", placeholder="What happened? When did it start? Who or what is affected?") }}{% for e in form.description.errors %}<small class="field-error">{{ e }}</small>{% endfor %}</label>
+  <label class="check-row">{{ form.is_confidential() }}<span><strong>Confidential report</strong><small>Restrict this report to you and authorized admins.</small></span></label>
+  <div class="form-actions"><a class="btn secondary" href="{{ url_for('dashboard') }}">Cancel</a>{{ form.submit(class_="btn primary") }}</div>
+</form>
+<aside class="guidance-card"><div class="guidance-icon">✦</div><h3>For a faster response</h3><ul><li>Choose the department responsible for the issue.</li><li>Include a specific location, such as a lab or room number.</li><li>Describe the issue clearly and respectfully.</li><li>Choose Emergency only when there is an immediate safety risk.</li></ul><div class="privacy-note"><strong>Privacy matters</strong><p>Confidential reports are hidden from other students and teachers in this starter app. Follow your college's official emergency process for urgent danger.</p></div></aside></div>
+{% endblock %}
